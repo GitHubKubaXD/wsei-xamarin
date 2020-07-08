@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using AirMonitor.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace AirMonitor.ViewModels
@@ -12,6 +14,20 @@ namespace AirMonitor.ViewModels
         public HomeViewModel(INavigation navigation)
         {
             _navigation = navigation;
+            Initialize();
+        }
+
+        private async Task Initialize()
+        {
+
+
+            var location = await GetLocation();
+        }
+
+        private async Task<Location> GetLocation()
+        {
+            Location location = await Geolocation.GetLastKnownLocationAsync();
+            return location;
         }
 
         private ICommand _goToDetailsCommand;
