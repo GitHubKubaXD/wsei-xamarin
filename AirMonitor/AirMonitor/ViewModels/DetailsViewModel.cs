@@ -5,9 +5,9 @@ using System.Runtime.CompilerServices;
 
 namespace AirMonitor.ViewModels
 {
-    public class DetailsViewModel : INotifyPropertyChanged
+    public class DetailsViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        
 
         public DetailsViewModel()
         {
@@ -83,22 +83,6 @@ namespace AirMonitor.ViewModels
         {
             get => _pressureValue;
             set => SetProperty(ref _pressureValue, value);
-        }
-
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-
-            field = value;
-
-            RaisePropertyChanged(propertyName);
-
-            return true;
-        }
+        }      
     }
 }

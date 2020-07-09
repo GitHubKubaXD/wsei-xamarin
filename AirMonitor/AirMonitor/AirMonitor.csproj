@@ -19,7 +19,6 @@
     <Folder Include="Views\" />
     <Folder Include="Views\Controls\" />
     <Folder Include="Styles\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
