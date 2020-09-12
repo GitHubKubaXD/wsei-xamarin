@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.Globalization;
 using System.Web;
+using Xamarin.Forms.Maps;
 
 namespace AirMonitor.ViewModels
 {
@@ -45,6 +46,13 @@ namespace AirMonitor.ViewModels
             });
 
             Items = new List<Measurement>(data);
+
+            Locations = Items.Select(s => new MapLocation
+            {
+                Address = s.Installation.Address.Description,
+                Description = "CQAI: " + s.CurrentDisplayValue,
+                Position = new Position(s.Installation.Location.Latitude, s.Installation.Location.Longitude)
+            }).ToList();
         }
 
         private ICommand _goToDetailsCommand;
@@ -52,6 +60,15 @@ namespace AirMonitor.ViewModels
 
         private void OnGoToDetails(Measurement item)
         {
+            _navigation.PushAsync(new DetailsPage(item));
+        }
+
+        private ICommand _mapPinTappedCommand;
+        public ICommand MapPinTappedCommand => _mapPinTappedCommand ?? (_mapPinTappedCommand = new Command<string>(OnMapPinTappedCommand));
+
+        private void OnMapPinTappedCommand(string address)
+        {
+            var item = Items.FirstOrDefault(s => s.Installation.Address.Equals(address));
             _navigation.PushAsync(new DetailsPage(item));
         }
 
@@ -65,6 +82,13 @@ namespace AirMonitor.ViewModels
             await LoadData(true);
 
             IsRefreshing = false;
+        }
+
+        private List<MapLocation> _locations;
+        public List<MapLocation> Locations
+        {
+            get => _locations;
+            set => SetProperty(ref _locations, value);
         }
 
         private List<Measurement> _items;

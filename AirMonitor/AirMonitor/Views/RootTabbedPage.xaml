@@ -9,6 +9,10 @@
         <x:Arguments>
             <views:HomePage/>
         </x:Arguments>
+    </NavigationPage><NavigationPage Title="Map" IconImageSource="baseline_room_black_24">
+        <x:Arguments>
+            <views:MapPage/>
+        </x:Arguments>
     </NavigationPage>
     <NavigationPage Title="Settings" IconImageSource="baseline_settings_black_24">
         <x:Arguments>
